@@ -10,7 +10,7 @@ public class Enrollment {
     Course course;
 
     static int lastID;
-    static ArrayList<Enrollment> allCE = new ArrayList<>();
+    public static ArrayList<Enrollment> allCE = new ArrayList<>();
 
     public Enrollment(Student student, Course course) {
         this.id = ++lastID;

@@ -51,4 +51,17 @@ public class EnrollmentRepository {
             System.out.println(e.getMessage());
         }
     }
+
+    public static void delete(int id) {
+        try {
+            // создаём соединение
+            Connection conn = DriverManager.getConnection(url, user, password);
+            // выполним запрос
+            conn.createStatement().executeQuery("DELETE FROM enrollment where (id= " + id + ")");
+            conn.close();
+        } catch (Exception e){
+            System.out.println("Не удалось удалить запись");
+            System.out.println(e.getMessage());
+        }
+    }
 }
