@@ -1,5 +1,7 @@
 package com.company.model;
 
+import com.company.repository.EnrollmentRepository;
+
 import java.util.ArrayList;
 
 public class Enrollment {
@@ -15,6 +17,7 @@ public class Enrollment {
         this.student = student;
         this.course = course;
         allCE.add(this);
+        EnrollmentRepository.add(id, student.getId(), course.getId());
     }
 
     public Enrollment(int id, int studentId, int courseId) {
