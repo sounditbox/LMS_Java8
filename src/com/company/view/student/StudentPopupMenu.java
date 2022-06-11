@@ -21,6 +21,7 @@ public class StudentPopupMenu extends JPopupMenu {
 
 
     }
+
     private static JMenuItem item(String text, String command) {
         JMenuItem button = new JMenuItem(text);
         button.setActionCommand(command);
@@ -41,8 +42,6 @@ public class StudentPopupMenu extends JPopupMenu {
                 case "save" -> Student.update(id, name, surname);
                 case "delete" -> Student.delete(id, rowIndex);
                 case "courses" -> {
-                    ArrayList<Course> courses = Student.getCoursesById(id);
-                    System.out.println(courses);
                     new GetCoursesFrame(Student.getStudentById(id), false);
                 }
                 case "enroll" -> new GetCoursesFrame(Student.getStudentById(id), true);

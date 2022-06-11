@@ -87,7 +87,7 @@ public class StudentRepository {
             // создаём соединение
             Connection conn = DriverManager.getConnection(url, user, password);
             // выполним запрос
-            conn.createStatement().executeQuery("DELETE FROM student where (id= " + id + ")");
+            conn.createStatement().executeUpdate("DELETE FROM student where (id= " + id + ")");
             conn.close();
         } catch (Exception e){
             System.out.println("Не удалось удалить студента");
