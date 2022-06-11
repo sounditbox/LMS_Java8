@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
         setSize(500, 500);
         setLocation(710, 290);
         setLayout(new FlowLayout());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         add(studentsPanel);
         setVisible(true);

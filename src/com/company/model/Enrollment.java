@@ -10,13 +10,13 @@ public class Enrollment {
     Course course;
 
     static int lastID;
-    public static ArrayList<Enrollment> allCE = new ArrayList<>();
+    public static ArrayList<Enrollment> allEnrollments = new ArrayList<>();
 
     public Enrollment(Student student, Course course) {
         this.id = ++lastID;
         this.student = student;
         this.course = course;
-        allCE.add(this);
+        allEnrollments.add(this);
         EnrollmentRepository.add(id, student.getId(), course.getId());
     }
 
@@ -24,12 +24,12 @@ public class Enrollment {
         this.id = lastID = id;
         this.student = Student.getStudentById(studentId);
         this.course = Course.getCourseById(courseId);
-        allCE.add(this);
+        allEnrollments.add(this);
     }
 
     public static ArrayList<Student> getStudentsByCourse(Course course) {
         ArrayList<Student> res = new ArrayList<>();
-        for (Enrollment ce : allCE) {
+        for (Enrollment ce : allEnrollments) {
             if (course.getId() == ce.course.getId()) {
                 res.add(ce.student);
             }
@@ -39,7 +39,7 @@ public class Enrollment {
 
     public static ArrayList<Course> getCoursesByStudent(Student student) {
         ArrayList<Course> res = new ArrayList<>();
-        for (Enrollment ce : allCE) {
+        for (Enrollment ce : allEnrollments) {
             if (student.getId() == ce.student.getId()) {
                 res.add(ce.course);
             }
@@ -47,8 +47,8 @@ public class Enrollment {
         return res;
     }
 
-    public static Enrollment getCourseEnrollment(Student st, Course c) {
-        for (Enrollment ce : allCE) {
+    public static Enrollment getEnrollment(Student st, Course c) {
+        for (Enrollment ce : allEnrollments) {
             if (ce.student.getId() == st.getId() && ce.course.getId() == c.getId()) {
                 return ce;
             }
@@ -59,12 +59,16 @@ public class Enrollment {
     public static ArrayList<Course> getCoursesByStudentId(int id) {
 
         ArrayList<Course> res = new ArrayList<>();
-        for (Enrollment ce : allCE) {
+        for (Enrollment ce : allEnrollments) {
             if (id == ce.student.getId()) {
                 res.add(ce.course);
             }
         }
         return res;
+    }
+
+    public static void remove(int id) {
+        allEnrollments.removeIf(ce -> ce.id == id);
     }
 
     public int getId() {

@@ -18,7 +18,7 @@ public class AcademicPerformance {
     }
 
     public static int getMarkByStudentAndCourse(Student st, Course c){
-        Enrollment ce = Enrollment.getCourseEnrollment(st, c);
+        Enrollment ce = Enrollment.getEnrollment(st, c);
         for (AcademicPerformance ap : allAP){
             if (ce.getId() == ap.enrollment.getId()){
 

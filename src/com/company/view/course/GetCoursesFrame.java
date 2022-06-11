@@ -7,8 +7,6 @@ import com.company.repository.EnrollmentRepository;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GetCoursesFrame extends JFrame {
     public GetCoursesPanel panel;
@@ -22,6 +20,9 @@ public class GetCoursesFrame extends JFrame {
         setLocation(1920 / 2 - 250, 1080 / 2 - 250);
         setLayout(new FlowLayout());
         panel = new GetCoursesPanel(student, toEnroll);
+        BoxLayout layout = new BoxLayout(panel, BoxLayout.Y_AXIS);
+        panel.setLayout(layout);
+
         add(panel);
         JButton button = new JButton();
         if (toEnroll) {
@@ -29,23 +30,22 @@ public class GetCoursesFrame extends JFrame {
             button.addActionListener(e -> {
                 int rowIndex = panel.table.getSelectedRow();
                 int id = Integer.parseInt(panel.table.getValueAt(rowIndex, 0).toString());
-                panel.table.removeRowSelectionInterval(rowIndex, rowIndex);
-                panel.table.updateUI();
+                panel.model.removeRow(rowIndex);
                 new Enrollment(student, Course.getCourseById(id));
             });
         } else {
             button.setText("Отчислить");
             button.addActionListener(e -> {
                 int rowIndex = panel.table.getSelectedRow();
-                int id = Integer.parseInt(panel.table.getValueAt(rowIndex, 0).toString());
-                panel.table.removeRowSelectionInterval(rowIndex, rowIndex);
-                panel.table.updateUI();
-                EnrollmentRepository.delete(id);
-                Enrollment.allCE.remove(id);
+                int courseId = Integer.parseInt(panel.table.getValueAt(rowIndex, 0).toString());
+                panel.model.removeRow(rowIndex);
+                Enrollment enrollment = Enrollment.getEnrollment(student, Course.getCourseById(courseId));
+                EnrollmentRepository.delete(enrollment.getId());
+                Enrollment.remove(enrollment.getId());
             });
         }
-        add(button);
-
+        panel.add(button);
+        pack();
         setVisible(true);
 
 
