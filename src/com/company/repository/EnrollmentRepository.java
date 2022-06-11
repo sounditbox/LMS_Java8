@@ -20,7 +20,7 @@ public class EnrollmentRepository {
 
             // запустим соединение
             Statement statement = conn.createStatement();
-            ResultSet results = statement.executeQuery("select * from enrollment");
+            ResultSet results = statement.executeQuery("select * from enrollment order by id");
 
             while (results.next()){
                 int id = Integer.parseInt(results.getString("id"));
