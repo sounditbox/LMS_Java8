@@ -1,6 +1,6 @@
 package com.company.model;
 
-import com.company.repository.CourseRepository;
+import com.company.repository.Repository;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Course {
 
     public Course(String title, String description) {
         setProperties(++lastId, title, description);
-        CourseRepository.addCourse(id, title, description);
+        Repository.addCourse(id, title, description);
 
     }
 
@@ -45,11 +45,11 @@ public class Course {
     }
 
     public static void update(int id, String title, String description) {
-        CourseRepository.update(id, title, description);
+        Repository.updateCourse(id, title, description);
     }
 
     public static void delete(int id, int rowIndex) {
-        CourseRepository.delete(id);
+        Repository.deleteCourse(id);
         model.removeRow(rowIndex);
     }
 
