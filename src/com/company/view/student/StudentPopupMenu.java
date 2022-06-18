@@ -1,13 +1,12 @@
 package com.company.view.student;
 
-import com.company.model.Course;
+import com.company.model.Enrollment;
 import com.company.model.Student;
 import com.company.view.course.GetCoursesFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class StudentPopupMenu extends JPopupMenu {
     public static MenuActionListener menuActionListener = new MenuActionListener();
@@ -40,10 +39,11 @@ public class StudentPopupMenu extends JPopupMenu {
 
             switch (e.getActionCommand()) {
                 case "save" -> Student.update(id, name, surname);
-                case "delete" -> Student.delete(id, rowIndex);
-                case "courses" -> {
-                    new GetCoursesFrame(Student.getStudentById(id), false);
+                case "delete" -> {
+                    Student.delete(id, rowIndex);
+                    Enrollment.removeByStudentId(id);
                 }
+                case "courses" -> new GetCoursesFrame(Student.getStudentById(id), false);
                 case "enroll" -> new GetCoursesFrame(Student.getStudentById(id), true);
                 default -> System.out.println("Неизвестная команда");
             }

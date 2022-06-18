@@ -40,10 +40,9 @@ public class GetCoursesFrame extends JFrame {
                 int courseId = Integer.parseInt(panel.table.getValueAt(rowIndex, 0).toString());
                 panel.model.removeRow(rowIndex);
                 Enrollment enrollment = Enrollment.getEnrollment(student, Course.getCourseById(courseId));
-                EnrollmentRepository.delete(enrollment.getId());
                 Enrollment.remove(enrollment.getId());
             });
-        }
+    }
         panel.add(button);
         pack();
         setVisible(true);

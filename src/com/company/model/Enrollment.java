@@ -68,7 +68,17 @@ public class Enrollment {
     }
 
     public static void remove(int id) {
-        allEnrollments.removeIf(ce -> ce.id == id);
+        allEnrollments.removeIf(ce -> id == ce.id);
+        EnrollmentRepository.delete(id);
+    }
+
+    public static void removeByStudentId(int id) {
+        for (Enrollment ce : allEnrollments) {
+            if (id == ce.student.getId()) {
+                allEnrollments.remove(ce);
+                EnrollmentRepository.delete(ce.getId());
+            }
+        }
     }
 
     public int getId() {
