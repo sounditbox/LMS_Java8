@@ -3,6 +3,7 @@ package com.company.model;
 import com.company.repository.EnrollmentRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Enrollment {
     int id;
@@ -73,16 +74,25 @@ public class Enrollment {
     }
 
     public static void removeByStudentId(int id) {
+        HashSet<Enrollment> toRemove = new HashSet<>();
         for (Enrollment ce : allEnrollments) {
             if (id == ce.student.getId()) {
-                allEnrollments.remove(ce);
+                toRemove.add(ce);
                 EnrollmentRepository.delete(ce.getId());
             }
         }
+        allEnrollments.removeAll(toRemove);
     }
 
     public static void removeByCourseId(int id) {
-        //
+        HashSet<Enrollment> toRemove = new HashSet<>();
+        for (Enrollment ce : allEnrollments) {
+            if (id == ce.course.getId()) {
+                toRemove.add(ce);
+                EnrollmentRepository.delete(ce.getId());
+            }
+        }
+        allEnrollments.removeAll(toRemove);
     }
 
     public int getId() {
