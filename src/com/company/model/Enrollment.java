@@ -81,6 +81,10 @@ public class Enrollment {
         }
     }
 
+    public static void removeByCourseId(int id) {
+        //
+    }
+
     public int getId() {
         return id;
     }

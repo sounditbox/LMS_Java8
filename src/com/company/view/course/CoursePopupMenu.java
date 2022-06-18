@@ -1,8 +1,9 @@
 package com.company.view.course;
 
 import com.company.model.Course;
+import com.company.model.Enrollment;
 import com.company.model.Student;
-import com.company.view.student.StudentListPanel;
+import com.company.view.student.GetStudentsFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,8 @@ public class CoursePopupMenu extends JPopupMenu {
     public CoursePopupMenu() {
         add(item("Сохранить", "save"));
         add(item("Удалить", "delete"));
-        add(item("Подробнее", "about"));
+        add(item("Студенты", "students"));
+        add(item("Зачислить", "enroll"));
 
     }
 
@@ -36,8 +38,12 @@ public class CoursePopupMenu extends JPopupMenu {
 
             switch (e.getActionCommand()) {
                 case "save" -> Course.update(id, title, description);
-                case "delete" -> Course.delete(id, rowIndex);
-                case "about" -> System.out.println("Тыкнули Подробнее");
+                case "delete" -> {
+                    Course.delete(id, rowIndex);
+                    Enrollment.removeByCourseId(id);
+                }
+                case "students" -> new GetStudentsFrame(Course.getCourseById(id), false);
+                case "enroll" -> new GetStudentsFrame(Course.getCourseById(id), true);
                 default -> System.out.println("Неизвестная команда");
             }
         }

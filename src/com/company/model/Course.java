@@ -4,6 +4,7 @@ import com.company.repository.CourseRepository;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Course {
 
@@ -22,22 +23,19 @@ public class Course {
 
     }
 
-    public Course(int id, String title, String description){
+    public Course(int id, String title, String description) {
         lastId = id;
         setProperties(id, title, description);
     }
 
     public static ArrayList<Course> getCoursesToEnrollByStudent(Student student) {
-        ArrayList<Course> courses =  new ArrayList<>();
-        for (Course course : allCourses){
-            if (!Enrollment.getCoursesByStudent(student).contains(course)){
-                courses.add(course);
-            }
-        }
-        return courses;
+        HashSet<Course> set = new HashSet<>(allCourses);
+        HashSet<Course> enrolledByStudent = new HashSet<>(Enrollment.getCoursesByStudent(student));
+        set.removeAll(enrolledByStudent);
+        return new ArrayList<>(set);
     }
 
-    public void setProperties(int id, String title, String description){
+    public void setProperties(int id, String title, String description) {
 
         this.id = id;
         this.title = title;
@@ -65,17 +63,21 @@ public class Course {
         return id;
     }
 
-    public ArrayList<Student> getStudents() {
-        return Enrollment.getStudentsByCourse(this);
+    public ArrayList<Student> getStudents(boolean toEnroll) {
+        if (toEnroll)
+            return Student.getStudentsToEnrollByCourse(this);
+        else
+            return Enrollment.getStudentsByCourse(this);
+
     }
 
     public String toString() {
         return this.id + " " + this.title;
     }
 
-    public static Course getCourseById(int id){
-        for (Course course: allCourses){
-            if (course.getId() == id){
+    public static Course getCourseById(int id) {
+        for (Course course : allCourses) {
+            if (course.getId() == id) {
                 return course;
             }
         }
