@@ -53,8 +53,8 @@ public class Repository {
 
             switch (tableName) {
                 case "enrollment" -> new Enrollment(Integer.parseInt(values[0]),
-                                                    Integer.parseInt(values[1]),
-                                                    Integer.parseInt(values[2]));
+                        Integer.parseInt(values[1]),
+                        Integer.parseInt(values[2]));
                 case "course" -> new Course(Integer.parseInt(values[0]), values[1], values[2], values[3]);
                 case "student" -> new Student(Integer.parseInt(values[0]), values[1], values[2], values[3], values[4]);
             }
@@ -88,22 +88,25 @@ public class Repository {
 
 
     public static void addCourse(String id, String title, String description, String teacher) {
-        add("course", new String[]{id, title, description, teacher});
+        add("course", new String[]{id, toStr(title), toStr(description), toStr(teacher)});
     }
 
     public static void addStudent(String id, String name, String surname, String email, String phone) {
-        add("student",  new String[]{id, name, surname, email, phone});
+        add("student", new String[]{id, toStr(name), toStr(surname), toStr(email), toStr(phone)});
     }
 
     public static void addEnrollment(String id, String student_id, String course_id) {
-        add("enrollment",  new String[]{id, student_id, course_id});
+        add("enrollment", new String[]{id, toStr(student_id), toStr(course_id)});
+    }
+
+    public static String toStr(String val) {
+        return "'" + val + "'";
     }
 
     public static void add(String tableName, String[] values) {
         try {
             // создаём соединение
             Connection conn = DriverManager.getConnection(Repository.url, Repository.user, Repository.password);
-
             // запустим соединение
             PreparedStatement statement =
                     conn.prepareStatement(

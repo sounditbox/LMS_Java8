@@ -11,10 +11,10 @@ import java.awt.event.ActionListener;
 public class AddStudentPanel extends JPanel {
     public AddStudentPanel() {
 
-        JTextField nameTF = new JTextField(10);
-        JTextField surnameTF = new JTextField(10);
-        JTextField emailTF = new JTextField(30);
-        JTextField phoneTF = new JTextField(10);
+        JTextField nameTF = new JTextField("Имя",10);
+        JTextField surnameTF = new JTextField("Фамилия", 10);
+        JTextField emailTF = new JTextField("example@mail.org", 21);
+        JTextField phoneTF = new JTextField("+78005553535",10);
         setBackground(Color.GRAY);
         JButton addButton = new JButton("Добавить");
         addButton.addActionListener(e -> {
