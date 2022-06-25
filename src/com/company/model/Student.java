@@ -10,20 +10,22 @@ public class Student {
     private int id;
     String name;
     String surname;
+    String email;
+    String phone;
 
     private static int lastId;
     public static DefaultTableModel model = new DefaultTableModel();
     public static ArrayList<Student> allStudents = new ArrayList<>();
 
-    public Student(String name, String surname) {
-        setProperties(++lastId, name, surname);
+    public Student(String name, String surname, String email, String phone) {
+        setProperties(++lastId, name, surname, email, phone);
         Repository.addStudent(id, name, surname);
 
     }
 
-    public Student(int id, String name, String surname) {
+    public Student(int id, String name, String surname, String email, String phone) {
         lastId = id;
-        setProperties(id, name, surname);
+        setProperties(id, name, surname,  email, phone);
     }
 
     public static void update(int id, String name, String surname) {
@@ -46,12 +48,14 @@ public class Student {
         return new ArrayList<>(set);
     }
 
-    public void setProperties(int id, String name, String surname) {
+    public void setProperties(int id, String name, String surname, String email, String phone) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.email = email;
+        this.phone = phone;
         allStudents.add(this);
-        model.addRow(new Object[]{id, name, surname});
+        model.addRow(new Object[]{id, name, surname, email, phone});
     }
 
     public int getId() {

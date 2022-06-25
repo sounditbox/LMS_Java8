@@ -14,8 +14,8 @@ public class Repository {
     private static final HashMap<String, String[]> tables = new HashMap<>() {
         {
             put("enrollment", new String[]{"id", "student_id", "course_id"});
-            put("student", new String[]{"id", "name", "surname"});
-            put("course", new String[]{"id", "title", "description"});
+            put("student", new String[]{"id", "name", "surname", "email", "phone"});
+            put("course", new String[]{"id", "title", "description", "teacher"});
         }
     };
 
@@ -44,15 +44,19 @@ public class Repository {
         // запустим соединение
         Statement statement = conn.createStatement();
         ResultSet results = statement.executeQuery("select * from " + tableName + " order by id");
-
+        String[] fields = tables.get(tableName);
         while (results.next()) {
-            int id = Integer.parseInt(results.getString(1));
-            String col2 = results.getString(2);
-            String col3 = results.getString(3);
+            String[] values = new String[fields.length];
+            for (int i = 0; i < fields.length; i++) {
+                values[i] = results.getString(i + 1);
+            }
+
             switch (tableName) {
-                case "enrollment" -> new Enrollment(id, Integer.parseInt(col2), Integer.parseInt(col3));
-                case "course" -> new Course(id, col2, col3);
-                case "student" -> new Student(id, col2, col3);
+                case "enrollment" -> new Enrollment(Integer.parseInt(values[0]),
+                                                    Integer.parseInt(values[1]),
+                                                    Integer.parseInt(values[2]));
+                case "course" -> new Course(Integer.parseInt(values[0]), values[1], values[2], values[3]);
+                case "student" -> new Student(Integer.parseInt(values[0]), values[1], values[2], values[3], values[4]);
             }
         }
     }

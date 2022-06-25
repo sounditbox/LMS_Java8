@@ -11,7 +11,7 @@ public class CourseListPanel extends JPanel {
     public static JTable table = new JTable();
 
     public CourseListPanel(){
-        Course.model.setColumnIdentifiers(new String[]{"ID", "Title", "Description"});
+        Course.model.setColumnIdentifiers(new String[]{"ID", "Название", "Описание", "Препод"});
         table.setModel(Course.model);
         add(new JScrollPane(table));
         CoursePopupMenu popupMenu = new CoursePopupMenu();
