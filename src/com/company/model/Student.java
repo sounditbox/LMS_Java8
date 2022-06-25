@@ -19,7 +19,7 @@ public class Student {
 
     public Student(String name, String surname, String email, String phone) {
         setProperties(++lastId, name, surname, email, phone);
-        Repository.addStudent(id, name, surname);
+        Repository.addStudent(id + "", name, surname, email, phone);
 
     }
 

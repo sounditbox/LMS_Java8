@@ -20,7 +20,7 @@ public class Course {
 
     public Course(String title, String description, String teacher) {
         setProperties(++lastId, title, description, teacher);
-        Repository.addCourse(id, title, description);
+        Repository.addCourse(id + "", title, description, teacher);
 
     }
 

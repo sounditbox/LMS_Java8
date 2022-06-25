@@ -87,19 +87,19 @@ public class Repository {
     }
 
 
-    public static void addCourse(int id, String title, String description) {
-        add("course", id, title, description);
+    public static void addCourse(String id, String title, String description, String teacher) {
+        add("course", new String[]{id, title, description, teacher});
     }
 
-    public static void addStudent(int id, String name, String surname) {
-        add("student", id, name, surname);
+    public static void addStudent(String id, String name, String surname, String email, String phone) {
+        add("student",  new String[]{id, name, surname, email, phone});
     }
 
-    public static void addEnrollment(int id, String student_id, String course_id) {
-        add("enrollment", id, student_id, course_id);
+    public static void addEnrollment(String id, String student_id, String course_id) {
+        add("enrollment",  new String[]{id, student_id, course_id});
     }
 
-    public static void add(String tableName, int id, String col2, String col3) {
+    public static void add(String tableName, String[] values) {
         try {
             // создаём соединение
             Connection conn = DriverManager.getConnection(Repository.url, Repository.user, Repository.password);
@@ -108,7 +108,7 @@ public class Repository {
             PreparedStatement statement =
                     conn.prepareStatement(
                             "insert into " + tableName + " values " +
-                                    "(" + id + ", " + col2 + ", " + col3 + ")");
+                                    "(" + String.join(", ", values) + ")");
             statement.executeUpdate();
             conn.close();
         } catch (Exception e) {
